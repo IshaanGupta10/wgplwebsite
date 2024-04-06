@@ -11049,6 +11049,7 @@ header.masthead .masthead-heading {
   padding-top: 6rem;
   padding-bottom: 6rem;
   text-align: center;
+  background-color: white;
 }
 .portfolio-modal .modal-content h2, .portfolio-modal .modal-content .h2 {
   font-size: 3rem;
