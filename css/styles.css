@@ -3764,6 +3764,13 @@ textarea.form-control-lg {
   text-decoration: none;
   white-space: nowrap;
 }
+@media (max-width: 768px) {
+  .navbar-brand {
+    display: block; /* Change display to block so it stacks vertically */
+    text-align: center; /* Center the text */
+    padding: 10px 0; /* Adjust padding as needed */
+  }
+}
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
 }
