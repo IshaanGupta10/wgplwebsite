@@ -3766,11 +3766,13 @@ textarea.form-control-lg {
 }
 @media (max-width: 768px) {
   .navbar-brand {
-    display: block; /* Change display to block so it stacks vertically */
-    text-align: center; /* Center the text */
+    display: flex; /* Change display to flex */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items vertically */
     padding: 10px 0; /* Adjust padding as needed */
   }
 }
+
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
 }
