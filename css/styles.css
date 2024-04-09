@@ -3763,6 +3763,9 @@ textarea.form-control-lg {
   color: var(--bs-navbar-brand-color);
   text-decoration: none;
   white-space: nowrap;
+  font-family: 'Times New Roman', Times, serif; 
+  font-size: 78%;
+  
 }
 @media (max-width: 768px) {
   .navbar-brand {
@@ -3770,6 +3773,8 @@ textarea.form-control-lg {
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items vertically */
     padding: 10px 0; /* Adjust padding as needed */
+    font-size: 98%;
+    margin: auto;
   }
 }
 
