@@ -1323,10 +1323,14 @@ a { color: inherit; text-decoration: none; }
   .nl-copy { padding: 36px 32px; }
 
   /* Drain Gratings */
-  .drain-gratings-section { padding: 60px 24px; }
-  .drain-header { grid-template-columns: 1fr; gap: 20px; }
-  .drain-grid { grid-template-columns: 1fr; }
-  .drain-img-wrap { max-width: 100%; aspect-ratio: 4/3; }
+  .drain-intro { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px 40px; }
+  .drain-hero-strip { height: 380px; }
+  .drain-hero-label { left: 24px; bottom: 32px; }
+  .drain-badges { right: 20px; gap: 10px; }
+  .drain-badge { min-width: 150px; padding: 10px 16px; }
+  .drain-bottom { grid-template-columns: 1fr 1fr; }
+  .drain-specs-panel { grid-column: span 2; height: auto; flex-direction: row; flex-wrap: wrap; gap: 20px; padding: 32px 24px; }
+  .dsp-row { flex: 0 0 calc(50% - 10px); border-bottom: none; padding: 0; }
 
   /* Showcase */
   .showcase-section { padding: 60px 24px; }
@@ -1422,8 +1426,15 @@ a { color: inherit; text-decoration: none; }
   .nl-body { font-size: 12px; }
 
   /* Drain Gratings */
-  .drain-gratings-section { padding: 48px 20px; }
-  .drain-features { gap: 24px; }
+  .drain-hero-strip { height: 280px; }
+  .drain-hero-label { left: 20px; bottom: 24px; }
+  .drain-badges { display: none; }
+  .drain-bottom { grid-template-columns: 1fr; }
+  .drain-card { height: 240px; }
+  .drain-card-tag { opacity: 1; transform: translateY(0); }
+  .drain-card-desc { max-height: 60px; }
+  .drain-specs-panel { grid-column: span 1; flex-direction: column; }
+  .dsp-row { flex: 0 0 100%; }
 
   /* Showcase */
   .showcase-section { padding: 48px 20px; }
@@ -1449,106 +1460,293 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
-   LASER CUT DRAIN GRATINGS — NEW PRODUCT SEGMENT
+   LASER CUT DRAIN GRATINGS — REDESIGNED DYNAMIC SECTION
 ============================================================ */
 .drain-gratings-section {
-  background: var(--obsidian-3);
+  background: var(--obsidian);
   border-top: 1px solid var(--gold-hair);
-  padding: 88px 80px;
+  padding: 0;
+  overflow: hidden;
 }
 
-.drain-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.drain-header {
+/* ── TOP INTRO BAND ── */
+.drain-intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: end;
-  margin-bottom: 52px;
+  padding: 88px 80px 56px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.drain-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.drain-img-wrap {
+/* ── HERO SHOWCASE: full-bleed cinematic strip ── */
+.drain-hero-strip {
   position: relative;
+  width: 100%;
+  height: 560px;
   overflow: hidden;
   background: var(--obsidian-4);
-  aspect-ratio: 1 / 1;
-  max-width: 520px;
 }
 
-.drain-img-wrap img {
-  filter: saturate(0.72) brightness(0.84);
-  transition: transform 0.80s ease, filter 0.60s ease;
+.drain-hero-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: saturate(0.30) brightness(1.10) contrast(1.12);
+  transform: scale(1.04);
+  transition: transform 12s ease, filter 1.2s ease;
+}
+.drain-hero-strip:hover img {
+  transform: scale(1.0);
+  filter: saturate(0.55) brightness(1.15) contrast(1.10);
 }
 
-.drain-img-wrap:hover img {
-  transform: scale(1.055);
-  filter: saturate(0.95) brightness(0.94);
-}
-
-.drain-img-overlay {
+/* Dark vignette over strip */
+.drain-hero-veil {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 40px 24px 18px;
-  background: linear-gradient(to top, rgba(10,9,8,0.94), transparent);
+  inset: 0;
+  background:
+    linear-gradient(to right,  rgba(10,9,8,0.80) 0%,  transparent 40%, rgba(10,9,8,0.60) 100%),
+    linear-gradient(to bottom, rgba(10,9,8,0.30) 0%,  transparent 30%, rgba(10,9,8,0.75) 100%);
+  pointer-events: none;
 }
 
-.drain-img-label {
+/* Floating product title on the strip */
+.drain-hero-label {
+  position: absolute;
+  bottom: 48px;
+  left: 80px;
+  z-index: 2;
+}
+.drain-hero-label .dhl-tag {
   font-family: var(--sans);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.35em;
-  color: var(--gold-lt);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.55em;
+  color: var(--gold);
   text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.90;
+}
+.drain-hero-label .dhl-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 3.8vw, 58px);
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.drain-hero-label .dhl-title em {
+  font-style: italic;
+  color: var(--gold-lt);
 }
 
-.drain-features {
+/* Floating spec badges — right side of strip */
+.drain-badges {
+  position: absolute;
+  top: 50%;
+  right: 80px;
+  transform: translateY(-50%);
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding-top: 8px;
+  gap: 14px;
 }
-
-.drain-feature {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+.drain-badge {
+  background: rgba(10,9,8,0.72);
+  border: 1px solid var(--gold-dim);
+  backdrop-filter: blur(6px);
+  padding: 14px 22px;
+  min-width: 190px;
+  transition: background 0.3s, border-color 0.3s;
 }
-
-.df-icon {
-  font-size: 8px;
-  color: var(--gold);
-  margin-top: 4px;
-  flex-shrink: 0;
-  opacity: 0.80;
+.drain-badge:hover {
+  background: rgba(201,169,110,0.10);
+  border-color: rgba(201,169,110,0.45);
 }
-
-.df-title {
+.db-label {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 7.5px;
   font-weight: 600;
-  letter-spacing: 0.28em;
-  color: var(--ivory);
+  letter-spacing: 0.42em;
+  color: var(--gold);
   text-transform: uppercase;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
+}
+.db-value {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.2;
 }
 
-.df-desc {
+/* ── BOTTOM GRID: 3 product cards + specs column ── */
+.drain-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.1fr;
+  gap: 2px;
+  background: var(--obsidian-4);
+}
+
+/* Product variant cards */
+.drain-card {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  background: var(--obsidian-4);
+  cursor: default;
+}
+.drain-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.28) brightness(1.05) contrast(1.10);
+  transition: transform 0.80s ease, filter 0.55s ease;
+}
+.drain-card:hover img {
+  transform: scale(1.07);
+  filter: saturate(0.60) brightness(1.15) contrast(1.05);
+}
+.drain-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,9,8,0.96) 0%, rgba(10,9,8,0.20) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 24px 20px;
+}
+.drain-card-num {
+  position: absolute;
+  top: 16px; right: 18px;
+  font-family: var(--serif);
+  font-size: 10px;
+  font-style: italic;
+  color: rgba(201,169,110,0.35);
+  letter-spacing: 0.1em;
+}
+.drain-card-tag {
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.50em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+.drain-card:hover .drain-card-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+.drain-card-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.25;
+}
+.drain-card-desc {
+  font-family: var(--sans);
+  font-size: 10.5px;
   font-weight: 300;
-  line-height: 1.90;
-  letter-spacing: 0.04em;
+  line-height: 1.70;
   color: var(--stone-2);
+  margin-top: 7px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.40s ease;
+}
+.drain-card:hover .drain-card-desc { max-height: 60px; }
+
+/* Specs panel — rightmost column */
+.drain-specs-panel {
+  background: var(--obsidian-3);
+  border-left: 1px solid var(--gold-hair);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dsp-heading {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.48em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gold-hair);
+}
+.dsp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gold-hair);
+}
+.dsp-row:last-of-type { border-bottom: none; }
+.dsp-key {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.30em;
+  color: var(--stone-2);
+  text-transform: uppercase;
+}
+.dsp-val {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.3;
+}
+.dsp-enquire {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 0;
+  font-family: var(--sans);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.40em;
+  color: var(--gold);
+  text-transform: uppercase;
+  border-top: 1px solid var(--gold-dim);
+  transition: color 0.25s, border-color 0.25s;
+}
+.dsp-enquire:hover {
+  color: var(--gold-lt);
+  border-color: var(--gold);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .drain-intro { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px 40px; }
+  .drain-hero-strip { height: 380px; }
+  .drain-hero-label { left: 24px; bottom: 32px; }
+  .drain-badges { right: 20px; gap: 10px; }
+  .drain-badge { min-width: 150px; padding: 10px 16px; }
+  .drain-bottom { grid-template-columns: 1fr 1fr; }
+  .drain-specs-panel { grid-column: span 2; height: auto; flex-direction: row; flex-wrap: wrap; gap: 20px; padding: 32px 24px; }
+  .dsp-row { flex: 0 0 calc(50% - 10px); border-bottom: none; padding: 0; }
+}
+@media (max-width: 560px) {
+  .drain-hero-strip { height: 280px; }
+  .drain-hero-label { left: 20px; bottom: 24px; }
+  .drain-badges { display: none; }
+  .drain-bottom { grid-template-columns: 1fr; }
+  .drain-card { height: 240px; }
+  .drain-card-tag { opacity: 1; transform: translateY(0); }
+  .drain-card-desc { max-height: 60px; }
+  .drain-specs-panel { grid-column: span 1; }
+  .dsp-row { flex: 0 0 100%; }
 }
 
 </style>
@@ -2123,70 +2321,124 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ══════════ LASER CUT DRAIN GRATINGS ══════════ -->
 <section class="drain-gratings-section reveal" id="drain-gratings">
-  <div class="drain-inner">
 
-    <div class="drain-header">
-      <div class="reveal">
-        <div class="eyebrow">
-          <div class="eyebrow-line"></div>
-          <span class="eyebrow-text">New Product Segment</span>
-        </div>
-        <h2 class="display-heading">Laser Cut<br><em>Drain Gratings</em></h2>
+  <!-- Intro band -->
+  <div class="drain-intro">
+    <div class="reveal">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">New Product Segment</span>
       </div>
-      <p class="body-copy reveal reveal-delay-1" style="max-width:430px;">
-        Heavy-duty, high-aesthetic drainage solutions for luxury interiors and poolside utility. Precision-laser-cut in stainless steel with a flawless anti-clog geometry — where engineering meets elegance beneath your feet.
-      </p>
+      <h2 class="display-heading">Laser Cut<br><em>Drain Gratings</em></h2>
+    </div>
+    <p class="body-copy reveal reveal-delay-1" style="max-width:430px;">
+      Heavy-duty, high-aesthetic drainage solutions for luxury interiors and poolside utility. Precision-laser-cut in stainless steel — where engineering meets elegance beneath your feet.
+    </p>
+  </div>
+
+  <!-- Cinematic hero strip -->
+  <div class="drain-hero-strip reveal">
+    <img
+      src="PHOTO-2025-08-16-12-16-30 9.jpg"
+      alt="SS Laser Cut Drain Grating — WGPL"
+    />
+    <div class="drain-hero-veil"></div>
+
+    <!-- Floating title bottom-left -->
+    <div class="drain-hero-label">
+      <div class="dhl-tag">Stainless Steel · 304 / 316 Grade</div>
+      <div class="dhl-title">Precision Cut.<br><em>Perfectly Drained.</em></div>
     </div>
 
-    <div class="drain-grid">
-
-      <div class="drain-img-wrap reveal reveal-delay-1">
-        <!--
-          INSERT GRATING PHOTO HERE
-          Replace the src attribute with your actual drain grating image path.
-          Recommended: square or portrait format, close-up of the grating pattern.
-        -->
-        <img
-          src="PHOTO-2025-08-16-12-16-30 9.jpg"
-          alt="Laser Cut Drain Grating — WGPL"
-        />
-        <div class="drain-img-overlay">
-          <span class="drain-img-label">SS Laser Cut · Floor Drain Grating</span>
-        </div>
+    <!-- Floating spec badges right -->
+    <div class="drain-badges">
+      <div class="drain-badge reveal reveal-delay-1">
+        <div class="db-label">Material</div>
+        <div class="db-value">SS 304 / 316</div>
       </div>
-
-      <div class="drain-features reveal reveal-delay-2">
-        <div class="drain-feature">
-          <div class="df-icon">◆</div>
-          <div>
-            <div class="df-title">Precision Laser Cut</div>
-            <p class="df-desc">CNC laser-cut patterns in 304/316 grade stainless steel — exact geometry, burr-free edges and a finish that holds up in wet environments.</p>
-          </div>
-        </div>
-        <div class="drain-feature">
-          <div class="df-icon">◆</div>
-          <div>
-            <div class="df-title">Luxury Interior Grade</div>
-            <p class="df-desc">Available in satin, mirror and antique finishes — designed to complement premium bathroom, kitchen and poolside floor treatments.</p>
-          </div>
-        </div>
-        <div class="drain-feature">
-          <div class="df-icon">◆</div>
-          <div>
-            <div class="df-title">Custom Dimensions</div>
-            <p class="df-desc">Manufactured to your exact floor cutout dimensions — any size, any pattern, with optional powder coat in any RAL colour.</p>
-          </div>
-        </div>
-        <div class="drain-feature">
-          <div class="df-icon">◆</div>
-          <div>
-            <div class="df-title">Poolside &amp; Outdoor Ready</div>
-            <p class="df-desc">316 marine-grade options available for outdoor pools, spa decks and wet utility areas requiring superior corrosion resistance.</p>
-          </div>
-        </div>
+      <div class="drain-badge reveal reveal-delay-2">
+        <div class="db-label">Finish</div>
+        <div class="db-value">Satin · Mirror · Matte</div>
       </div>
-
+      <div class="drain-badge reveal reveal-delay-3">
+        <div class="db-label">Pattern</div>
+        <div class="db-value">Custom Laser Cut</div>
+      </div>
+      <div class="drain-badge reveal reveal-delay-4">
+        <div class="db-label">Application</div>
+        <div class="db-value">Bath · Pool · Kitchen</div>
+      </div>
     </div>
+  </div>
+
+  <!-- Bottom: 3 variant cards + specs panel -->
+  <div class="drain-bottom">
+
+    <!-- Card 1 -->
+    <div class="drain-card reveal">
+      <span class="drain-card-num">01</span>
+      <img src="dgi.jpeg" alt="Square Slot Drain Grating" style="object-position: center top;" />
+      <div class="drain-card-overlay">
+        <div class="drain-card-tag">Bathroom · Poolside</div>
+        <div class="drain-card-title">Square Slot<br>Drain Grating</div>
+        <div class="drain-card-desc">Horizontal slot-cut pattern in brushed SS 304 — a refined choice for wet rooms and luxury spa floors.</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="drain-card reveal reveal-delay-1">
+      <span class="drain-card-num">02</span>
+      <img src="dgi2.jpeg" alt="Geometric Laser Cut Drain" style="object-position: center center;" />
+      <div class="drain-card-overlay">
+        <div class="drain-card-tag">Luxury Interior</div>
+        <div class="drain-card-title">Geometric<br>Laser Cut Drain</div>
+        <div class="drain-card-desc">Precision square-perforated pattern in dark powder coat — a statement piece for high-end bathroom floors.</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="drain-card reveal reveal-delay-2">
+      <span class="drain-card-num">03</span>
+      <img src="dgi3.jpeg" alt="Custom Pattern Drain Cover" style="object-position: center 70%;" />
+      <div class="drain-card-overlay">
+        <div class="drain-card-tag">Custom · Any Size</div>
+        <div class="drain-card-title">Custom Pattern<br>Drain Cover</div>
+        <div class="drain-card-desc">Bespoke cutout designs to match any tile or floor material — made-to-measure in any RAL powder coat colour.</div>
+      </div>
+    </div>
+
+    <!-- Specs panel -->
+    <div class="drain-specs-panel reveal reveal-delay-3">
+      <div>
+        <div class="dsp-heading">Product Specifications</div>
+        <div class="dsp-row">
+          <span class="dsp-key">Grade</span>
+          <span class="dsp-val">SS 304 · SS 316 Marine</span>
+        </div>
+        <div class="dsp-row">
+          <span class="dsp-key">Finish Options</span>
+          <span class="dsp-val">Satin · Mirror · Matte · Powder Coat</span>
+        </div>
+        <div class="dsp-row">
+          <span class="dsp-key">Dimensions</span>
+          <span class="dsp-val">Custom — any size, any cutout</span>
+        </div>
+        <div class="dsp-row">
+          <span class="dsp-key">Applications</span>
+          <span class="dsp-val">Bathroom · Kitchen · Pool Deck · Spa</span>
+        </div>
+        <div class="dsp-row">
+          <span class="dsp-key">Pattern</span>
+          <span class="dsp-val">Slot · Square · Jali · Custom Laser</span>
+        </div>
+        <div class="dsp-row">
+          <span class="dsp-key">Load Rating</span>
+          <span class="dsp-val">Light to Heavy Duty</span>
+        </div>
+      </div>
+      <a class="dsp-enquire" href="#footer">Enquire Now →</a>
+    </div>
+
   </div>
 </section>
 
